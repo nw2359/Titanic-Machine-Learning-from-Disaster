@@ -166,6 +166,17 @@ solution <- data.frame(PassengerID = test$PassengerId, Survived = prediction)
 write.csv(solution, file = 'rf_mod_Solution.csv', row.names = F)
 ```
 
-
+# SVM model
+```{r}
+library(e1071)
+svm_model <- svm(factor(Survived) ~ Pclass + Sex + Age + SibSp + Parch + 
+                                            Fare + Embarked + Title + 
+                                            FsizeD + Child + Mother,
+                                            data = train,
+                                            kernel = "linear",cost = 10)
+svm_pred <- predict(svm_model, test[,c("Pclass","Sex", "Age", "SibSp","Parch","Fare","Embarked","Title","FsizeD","Child","Mother")])
+svm_sol <- data.frame(PassengerID = test$PassengerId, Survived = svm_pred)
+write.csv(svm_sol, file = "svm_mod_Solution.csv", row.names = F)
+```
 
 
